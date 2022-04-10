@@ -1,0 +1,9 @@
+node_modules/
+coverage/
+
+.storybook/
+__mocks__/
+
+src/**/*.stories.js
+src/**/*.test.js
+src/_test_assets/
