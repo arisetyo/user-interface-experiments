@@ -1,0 +1,172 @@
+/**
+ * Carousel stylesheet
+ */
+
+ .Carousel {
+  width: 700px;
+  height: 500px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  background-color: rgb(30, 30, 30);
+  font-family: "Karla", Arial, Helvetica, sans-serif;
+}
+
+.Carousel > h1 {
+  font-size: 28px;
+  margin: 0;
+  padding-top: 10px;
+  color: white;
+  text-align: center;
+  color: purple;
+}
+
+/* Navigation indicator */
+.Carousel > .navIndicator {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.Carousel > .navIndicator > .dotContainer > .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: white;
+  margin: 0 2px;
+}
+
+.Carousel > .navIndicator > .dotContainer > .dot.selected {
+  background-color: purple;
+}
+
+
+/* Chevron related */
+.Carousel > .leftChevron,
+.Carousel > .rightChevron {
+  position: absolute;
+  top: 40%;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgba(200, 200, 200, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: 0.8s ease;
+  z-index: 99;
+}
+
+.Carousel > .leftChevron {
+  left: 30px;
+}
+
+.Carousel > .rightChevron {
+  right: 30px;
+}
+
+.Carousel > .leftChevron > img,
+.Carousel > .rightChevron > img {
+  width: 12px;
+  height: 20px;
+  margin-left: -4px;
+  transition: 0.2s ease;
+  user-select: none;
+}
+
+.Carousel > .rightChevron > img {
+  transform: rotate(180deg);
+  margin-left: 2px;
+}
+
+.Carousel > .leftChevron:hover,
+.Carousel > .rightChevron:hover {
+  background-color: rgba(128, 0, 128);
+ }
+.Carousel > .leftChevron:hover > img { margin-left: -12px }
+.Carousel > .rightChevron:hover > img { margin-left: 10px }
+
+
+/* Poster related */
+.Carousel > .posterContainer {
+  top: 0;
+  left: 0;
+  margin-left: 125px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.Carousel > .posterContainer .itemContainer {
+  position: absolute;
+  top: 10px;
+  transition: 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(247, 247, 247);
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow:  0 2px 12px 0 rgba(128, 0, 128, 0.6);
+}
+
+.Carousel > .posterContainer > .itemContainer.center {
+  left: 106px;
+  z-index: 98;
+}
+
+.Carousel > .posterContainer > .itemContainer.farleft {
+  left: -82px;
+  transform: scale(0.6);
+  z-index: 95;
+}
+
+.Carousel > .posterContainer > .itemContainer.left {
+  left: -2px;
+  transform: scale(0.8);
+  z-index: 96;
+}
+
+.Carousel > .posterContainer > .itemContainer.right {
+  left: 213px;
+  transform: scale(0.8);
+  z-index: 97;
+}
+
+.Carousel > .posterContainer > .itemContainer.farright {
+  left: 293px;
+  transform: scale(0.6);
+  z-index: 96;
+}
+
+.Carousel > .posterContainer > .itemContainer.hidden {
+  left: 106px;
+  transform: scale(0.4);
+  z-index: 90;
+  opacity: 0;
+}
+
+.Carousel > .posterContainer > .itemContainer > .albumCover {
+  /* */
+}
+
+.Carousel > .posterContainer > .itemContainer > .albumCopy {
+  padding: 8px 0;
+  width: 200px;
+  
+}
+
+.Carousel > .posterContainer > .itemContainer > .albumCopy > h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.Carousel > .posterContainer > .itemContainer > .albumCopy > p {
+  font-size: 12px;
+}
