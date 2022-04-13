@@ -12,22 +12,39 @@ import chevron from '../assets/chevron.png';
 * @param {string} props.title - Carousel title
 * @returns {ReactComponent}
 */
-const Carousel = ({ title, data }) => {
+const Carousel = ({ data }) => {
 
-  const [currentCenter, setCurrentCenter] = useState(null);
+  const [currentCenter, setCurrentCenter] = useState(2);
   const [items, setItems] = useState([]);
+  const [selected, setSelected] = useState({});
 
-  const lastPosition = items.length - 1;
+  const lastPosition = data.length - 1;
 
   // On mount, load data
   useEffect( () => {
-    // await setItems(data);
-    setItems(data);
-
     // Move the first item into central position.
-    // Without this, the second item will be shown instead,
-    // so we simulate a navigation action of clicking the left navigation button
-    // handleNav("L");
+    // Without this, another item will be shown instead.
+    let z;
+    let newData = [...data];
+
+    // we do this twice because we are showing 2 items on the left
+    // 1
+    z = newData.pop();
+    newData.unshift(z);
+    // 2
+    z = newData.pop();
+    newData.unshift(z);
+
+    // set the position
+    newData = newData.map((i, index) => (
+      {
+        ...i,
+        position: index
+      }
+    ));
+
+    setItems(newData);
+    setSelected(newData[2]);
   }, []);
 
   /**
@@ -61,7 +78,7 @@ const Carousel = ({ title, data }) => {
    * handle nav button click
    * @param {*} dir Direction of carousel movement
    */
-  const handleNav = async dir => {
+  const handleNav = dir => {
     const newArr = [...items].map( i => (
       {
         ...i,
@@ -70,8 +87,17 @@ const Carousel = ({ title, data }) => {
     ));
 
     // update state of which poster is currently in the center
-    await setCurrentCenter(newArr.findIndex(o => o.position === 1));
+    // equals two because the center is 0 1 >2< 3 4
+    let newCenter;
+    let indexOfCenter = newArr.findIndex(o => o.position === 2);
+    
+    // adjust current center if number lower than 2
+    if (indexOfCenter < 2) newCenter = newArr.length + indexOfCenter;
+    else newCenter = indexOfCenter;
+    
     setItems(newArr);
+    setCurrentCenter(newCenter);
+    setSelected(newArr[indexOfCenter]);
   };
 
   /**
@@ -87,15 +113,7 @@ const Carousel = ({ title, data }) => {
         `}
       >
         <div className={styles.albumCover}>
-          <img
-            src={item.cover}
-            width={200}
-            height={200}
-          />
-        </div>
-        <div className={styles.albumCopy}>
-          <h2>{item.album}</h2>
-          <p>{item.description}</p>
+          <img src={item.cover}/>
         </div>
       </div>
     ));
@@ -103,9 +121,12 @@ const Carousel = ({ title, data }) => {
 
   return (
     <div className={styles.Carousel}>
-      <h1>{title}</h1>
+      <div className={styles.headers}>
+        <h1>Prince</h1>
+        <h2>The Golden Era</h2>
+      </div>
 
-      {/* Main content */}
+      {/* Covers */}
       <div className={styles.posterContainer}>
         {
           // Somehow needs to be declared as a function.
@@ -114,20 +135,38 @@ const Carousel = ({ title, data }) => {
         }
       </div>
 
-      {/* Navigation */}
+      {/* Description */}
+      <div className={styles.albumDescription}>
+        <h2>
+          “{selected.album}”
+        </h2>
+        <h3>
+          ({selected.year})
+        </h3>
+        <p>
+          {selected.description}
+        </p>
+      </div>
+
+      {/* Navigation indicator */}
       <div className={styles.navIndicator}>
         <div className={styles.dotContainer}>
           {items.map((_, index) => (
             <span
               key={`CarouselDot-${index}`}
-              className={`${styles.dot} ${
-                index === currentCenter ? styles.selected : ''
-              }`}
+              className={`
+              ${styles.dot}
+              ${
+                // minus two because the actual image in the center has a  position of 2
+                index === currentCenter - 2 ? styles.selected : ''
+              }
+              `}
             />
-          ))}
+            ))}
         </div>
       </div>
 
+      {/* Navigation */}
       <div
         className={styles.leftChevron}
         onClick={() => handleNav('L')}
@@ -145,13 +184,12 @@ const Carousel = ({ title, data }) => {
 };
 
 Carousel.propTypes = {
-  title: PropTypes.string,
+  data: PropTypes.array,
 };
 
 export const defaultProps = {
-  title: 'Title',
+  data: [],
 };
-
 Carousel.defaultProps = defaultProps;
 
 export default Carousel;
