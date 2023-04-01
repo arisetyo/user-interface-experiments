@@ -1,6 +1,6 @@
 {
-  "name": "user-interface-experiments",
-  "version": "1.0.0",
+  "name": "amp-user-interface-experiments",
+  "version": "1.0.1",
   "description": "Experiments in UIX React components",
   "main": "index.js",
   "scripts": {
